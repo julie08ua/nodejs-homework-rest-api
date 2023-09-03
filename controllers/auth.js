@@ -89,13 +89,13 @@ const updateAvatar = async (req, res) => {
     const resultUpload = path.join(avatarsDir, fileName);
 
     Jimp.read(tempUpload)
-        .then(image => {
+        .then((image) => {
             image
                 .resize(250, 250)
                 .write(resultUpload);
         })
         .catch((err) => {
-            console.error(err);
+            throw HttpError(400, err);
         });
     
     await fs.rename(tempUpload, resultUpload);
